@@ -24,6 +24,11 @@ dependencies {
 
 # Catalogue
 1. [How to hook method?](#How-to-hook-method?)
+    1. [Simple to use](#Simple-to-use)
+    2. [Before and after hook](#Before-and-after-hook)
+    3. [Replece method](#Replece-method)
+    4. [Change return value](#Change-return-value)
+    5. [Some utilities in hook](#Some-utilities-in-hook)
 2. [How to use KXSharedPreferences?](#How-to-use-KXSharedPreferences?)
 3. [How to use KXBroadcastReceiver?](#How-to-use-KXBroadcastReceiver?)
 
@@ -39,7 +44,7 @@ KXposedHelpers.findAndHookMethod(Activity::class, "onCreate", parameterTypes = a
 })
 ```
 
-#### Before and After Hook
+#### Before and after hook
 ```kotlin
 KXposedHelpers.findAndHookMethod(Activity::class, "onStart", methodHook = MethodHook(
     beforeHookedMethod = { param->
@@ -62,6 +67,12 @@ KXposedHelpers.findAndHookMethod(TextView::class, "getText", methodHook = Method
 })
 ```
 
+#### Some utilities in hook
+```kotlin
+// ActivityHookHelper
+
+```
+
 ### How to use KXSharedPreferences?
 In high Android version, because the security permission, and the  XSharedPreferences not working very well, so I created the utility for SharedPreferences called KXSharedPreferences, it's use the ContentProvider to shared preferences across the applications.
 
@@ -81,3 +92,36 @@ sp.getString("key","defValue")
 
 ### How to use KXBroadcastReceiver?
 Sometimes you need to receive some broadcasts from your app, so this can help you easily to receiver broadcasts.
+
+Step 1. you need to implement KXBroadcastReceiver.
+```kotlin
+class BarBroadReceiver : KXBroadcastReceiver() {
+    override val intentFilter: IntentFilter
+        get() = IntentFilter().apply {
+            addAction("Action1")
+            addAction("Action2")
+        }
+}
+```
+
+Step 2. register, unregister and listening
+```kotlin
+val barBroadReceiver = BarBroadReceiver()
+
+barBroadReceiver.setOnReceiveListener { context, intent ->
+    when (intent.action) {
+        "Action1" -> {
+        }
+        "Action2" -> {
+        }
+    }
+}
+
+ActivityHookHelper.onCreate {
+    barBroadReceiver.register(this)
+}
+
+ActivityHookHelper.onDestroy {
+    barBroadReceiver.unRegister(this)
+}
+```
