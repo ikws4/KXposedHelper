@@ -32,8 +32,8 @@ dependencies {
 ##### Simple to use
 ```kotlin
 KXposedHelpers.findAndHookMethod(Activity::class, "onCreate", parameterTypes = arrayOf(Bundle::class), methodHook = MethodHook{param->
-    // `this` for the activity instance
-    // So you can write code just like in your normal way on Activity
+    // `this` for the Activity instance
+    // So you can write code just like in your regular way on Activity
     // For exmaple
     Toast.makeText(this,"onStart",Toast.LENGTH_SHORT).show()
 })
@@ -80,3 +80,4 @@ sp.getString("key","defValue")
 ```
 
 ### How to use KXBroadcastReceiver?
+Sometimes you need to receive some broadcasts from your app, so this can help you easily to receiver broadcasts.
