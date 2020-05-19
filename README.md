@@ -23,12 +23,12 @@ dependencies {
 ```
 
 # Catalogue
-1. [How to hook method?](# How to hook method?)
-2. [How to use KXSharedPreferences?](#How to use KXSharedPreferences?)
-3. [How to use KXBroadcastReceiver?](#How to use KXBroadcastReceiver?)
+1. [How to hook method?](#How-to-hook-method?)
+2. [How to use KXSharedPreferences?](#How-to-use-KXSharedPreferences?)
+3. [How to use KXBroadcastReceiver?](#How-to-use-KXBroadcastReceiver?)
 
-## How to hook method?
+### How to hook method?
 
-## How to use KXSharedPreferences?
+### How to use KXSharedPreferences?
 
-## How to use KXBroadcastReceiver?
+### How to use KXBroadcastReceiver?
