@@ -1,6 +1,5 @@
 package io.ikws4.kxposedhelper.utilities
 
-import android.app.Activity
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -18,7 +17,7 @@ abstract class KXBroadcastReceiver {
         }
     }
 
-    fun setOnReceiveListener(onReceive: () -> Unit) {
+    fun setOnReceiveListener(onReceive: (context: Context, intent: Intent) -> Unit) {
         this.listener = object : OnReceiveListener {
             override fun onReceive(context: Context, intent: Intent) {
                 onReceive(context, intent)
@@ -26,11 +25,11 @@ abstract class KXBroadcastReceiver {
         }
     }
 
-    fun register(context: Activity) {
+    fun register(context: Context) {
         context.registerReceiver(broadcastReceiver, intentFilter)
     }
 
-    fun unRegister(context: Activity) {
+    fun unRegister(context: Context) {
         context.unregisterReceiver(broadcastReceiver)
     }
 
