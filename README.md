@@ -69,8 +69,14 @@ KXposedHelpers.findAndHookMethod(TextView::class, "getText", methodHook = Method
 
 #### Some utilities in hook
 ```kotlin
-// ActivityHookHelper
+// ActivityHookHelper for Activity lifecycle hook
+ActivityHookHelper.onCreate {  }
+ActivityHookHelper.onDestroy {  }
+...
 
+// ApplicationHookHelper
+ApplicationHookHelper.onCreate {  }
+ApplicationHookHelper.attach {  }
 ```
 
 ### How to use KXSharedPreferences?
