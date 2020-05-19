@@ -29,6 +29,35 @@ dependencies {
 
 ### How to hook method?
 
+##### Simple to use
+```kotlin
+KXposedHelpers.findAndHookMethod(Activity::class, "onCreate", parameterTypes = arrayOf(Bundle::class), methodHook = MethodHook{param->
+    // `this` for the activity instance.
+    // So you can write code just like in your normal way on Activity.
+    // For exmaple
+    Toast.makeText(this,"onStart",Toast.LENGTH_SHORT).show()
+})
+```
+
+#### Before and After Hook
+```kotlin
+KXposedHelpers.findAndHookMethod(Activity::class, "onStart", methodHook = MethodHook(
+    beforeHookedMethod = { param->
+    },
+    afterHookedMethod = { param->
+    })
+)
+```
+
+#### Change return value
+```kotlin
+KXposedHelpers.findAndHookMethod(TextView::class, "getText", methodHook = MethodHook{param->
+    param.result = "Changed result value."
+})
+```
+
 ### How to use KXSharedPreferences?
+
+
 
 ### How to use KXBroadcastReceiver?
