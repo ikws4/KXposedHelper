@@ -32,8 +32,8 @@ dependencies {
 ##### Simple to use
 ```kotlin
 KXposedHelpers.findAndHookMethod(Activity::class, "onCreate", parameterTypes = arrayOf(Bundle::class), methodHook = MethodHook{param->
-    // `this` for the activity instance.
-    // So you can write code just like in your normal way on Activity.
+    // `this` for the activity instance
+    // So you can write code just like in your normal way on Activity
     // For exmaple
     Toast.makeText(this,"onStart",Toast.LENGTH_SHORT).show()
 })
@@ -52,12 +52,22 @@ KXposedHelpers.findAndHookMethod(Activity::class, "onStart", methodHook = Method
 #### Change return value
 ```kotlin
 KXposedHelpers.findAndHookMethod(TextView::class, "getText", methodHook = MethodHook{param->
-    param.result = "Changed result value."
+    param.result = "Changed result value"
 })
 ```
 
 ### How to use KXSharedPreferences?
-
-
+Step 1. Add the provider to your AndroidManifest.xml
+```xml
+<provider
+    android:authorities="io.ikws4.kxposedhelper.utilities.KXSharedPreferencesProvider"
+    android:name="io.ikws4.kxposedhelper.utilities.KXSharedPreferencesProvider"
+    android:exported="true"/>
+```
+Step 2. Use the KXSharedPreferences object to get SharedPreferences value.
+```kotlin
+val sp = KXSharedPreferences(contentResolver,"your SharedPreferences name")
+sp.getString("key","defValue")
+```
 
 ### How to use KXBroadcastReceiver?
