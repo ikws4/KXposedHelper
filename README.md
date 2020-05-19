@@ -1,5 +1,5 @@
 # KXposedHelper
-🔥XposedHlper for Kotlin, provide awesome utilities for your xpoesd module develop.
+🔥XposedHlper for Kotlin, provide some awesome utilities for your xposed module development.
 
 [![](https://jitpack.io/v/ikws4/KXposedHelper.svg)](https://jitpack.io/#ikws4/KXposedHelper)
 ![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/ikws4/KXposedHelper)
@@ -49,6 +49,12 @@ KXposedHelpers.findAndHookMethod(Activity::class, "onStart", methodHook = Method
 )
 ```
 
+#### Replece method
+```kotlin
+KXposedHelpers.findAndHookMethod(Activity::class, "onStart", methodHook = MethodReplecement{param->
+})
+```
+
 #### Change return value
 ```kotlin
 KXposedHelpers.findAndHookMethod(TextView::class, "getText", methodHook = MethodHook{param->
@@ -57,6 +63,8 @@ KXposedHelpers.findAndHookMethod(TextView::class, "getText", methodHook = Method
 ```
 
 ### How to use KXSharedPreferences?
+In high Android version, because the security permission, and the  XSharedPreferences not working very well, so I created the utility for SharedPreferences called KXSharedPreferences, it's use the ContentProvider to shared preferences across the applications.
+
 Step 1. Add the provider to your AndroidManifest.xml
 ```xml
 <provider
@@ -64,6 +72,7 @@ Step 1. Add the provider to your AndroidManifest.xml
     android:name="io.ikws4.kxposedhelper.utilities.KXSharedPreferencesProvider"
     android:exported="true"/>
 ```
+
 Step 2. Use the KXSharedPreferences object to get SharedPreferences value.
 ```kotlin
 val sp = KXSharedPreferences(contentResolver,"your SharedPreferences name")
