@@ -99,22 +99,14 @@ sp.getString("key","defValue")
 ### How to use KXBroadcastReceiver?
 Sometimes you need to receive some broadcasts from your app, so this can help you easily to receiver broadcasts.
 
-Step 1. you need to implement KXBroadcastReceiver.
 ```kotlin
-class BarBroadReceiver : KXBroadcastReceiver() {
-    override val intentFilter: IntentFilter
-        get() = IntentFilter().apply {
-            addAction("Action1")
-            addAction("Action2")
-        }
-}
-```
+val broadReceiver = KXBroadcastReceiver(
+    IntentFilter().apply {
+        addAction("Action1")
+        addAction("Action2")
+    })
 
-Step 2. register, unregister and listening
-```kotlin
-val barBroadReceiver = BarBroadReceiver()
-
-barBroadReceiver.setOnReceiveListener { context, intent ->
+broadReceiver.setOnReceiveListener { context, intent ->
     when (intent.action) {
         "Action1" -> {
         }
@@ -124,11 +116,11 @@ barBroadReceiver.setOnReceiveListener { context, intent ->
 }
 
 ActivityHookHelper.onCreate {
-    barBroadReceiver.register(this)
+    broadReceiver.register(this)
 }
 
 ActivityHookHelper.onDestroy {
-    barBroadReceiver.unRegister(this)
+    broadReceiver.unRegister(this)
 }
 ```
 
