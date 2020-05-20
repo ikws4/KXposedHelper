@@ -5,16 +5,14 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 
-abstract class KXBroadcastReceiver {
+abstract class KXBroadcastReceiver : BroadcastReceiver() {
 
     abstract val intentFilter: IntentFilter
 
     private var listener: OnReceiveListener? = null
 
-    private val broadcastReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context, intent: Intent) {
-            listener?.onReceive(context, intent)
-        }
+    override fun onReceive(context: Context, intent: Intent) {
+        listener?.onReceive(context, intent)
     }
 
     fun setOnReceiveListener(onReceive: (context: Context, intent: Intent) -> Unit) {
@@ -26,15 +24,14 @@ abstract class KXBroadcastReceiver {
     }
 
     fun register(context: Context) {
-        context.registerReceiver(broadcastReceiver, intentFilter)
+        context.registerReceiver(this, intentFilter)
     }
 
     fun unRegister(context: Context) {
-        context.unregisterReceiver(broadcastReceiver)
+        context.unregisterReceiver(this)
     }
 
     interface OnReceiveListener {
-
         fun onReceive(context: Context, intent: Intent)
     }
 }
