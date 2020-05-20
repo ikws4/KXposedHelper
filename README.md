@@ -18,12 +18,17 @@ allprojects {
 Step 2. Add the dependency
 ```gradle
 dependencies {
-    implementation 'com.github.ikws4:KXposedHelper:1.0'
+    implementation 'com.github.ikws4:KXposedHelper:1.1'
 }
 ```
 
 # Catalogue
 1. [How to hook method?](#How-to-hook-method?)
+    1. [Simple to use](#Simple-to-use)
+    2. [Before and after hook](#Before-and-after-hook)
+    3. [Replece method](#Replece-method)
+    4. [Change return value](#Change-return-value)
+    5. [Some utilities in hook](#Some-utilities-in-hook)
 2. [How to use KXSharedPreferences?](#How-to-use-KXSharedPreferences?)
 3. [How to use KXBroadcastReceiver?](#How-to-use-KXBroadcastReceiver?)
 
@@ -39,7 +44,7 @@ KXposedHelpers.findAndHookMethod(Activity::class, "onCreate", parameterTypes = a
 })
 ```
 
-#### Before and After Hook
+#### Before and after hook
 ```kotlin
 KXposedHelpers.findAndHookMethod(Activity::class, "onStart", methodHook = MethodHook(
     beforeHookedMethod = { param->
@@ -62,6 +67,18 @@ KXposedHelpers.findAndHookMethod(TextView::class, "getText", methodHook = Method
 })
 ```
 
+#### Some utilities in hook
+```kotlin
+// ActivityHookHelper for Activity lifecycle hook
+ActivityHookHelper.onCreate {  }
+ActivityHookHelper.onDestroy {  }
+...
+
+// ApplicationHookHelper
+ApplicationHookHelper.onCreate {  }
+ApplicationHookHelper.attach {  }
+```
+
 ### How to use KXSharedPreferences?
 In high Android version, because the security permission, and the  XSharedPreferences not working very well, so I created the utility for SharedPreferences called KXSharedPreferences, it's use the ContentProvider to shared preferences across the applications.
 
@@ -81,3 +98,61 @@ sp.getString("key","defValue")
 
 ### How to use KXBroadcastReceiver?
 Sometimes you need to receive some broadcasts from your app, so this can help you easily to receiver broadcasts.
+
+Step 1. you need to implement KXBroadcastReceiver.
+```kotlin
+class BarBroadReceiver : KXBroadcastReceiver() {
+    override val intentFilter: IntentFilter
+        get() = IntentFilter().apply {
+            addAction("Action1")
+            addAction("Action2")
+        }
+}
+```
+
+Step 2. register, unregister and listening
+```kotlin
+val barBroadReceiver = BarBroadReceiver()
+
+barBroadReceiver.setOnReceiveListener { context, intent ->
+    when (intent.action) {
+        "Action1" -> {
+        }
+        "Action2" -> {
+        }
+    }
+}
+
+ActivityHookHelper.onCreate {
+    barBroadReceiver.register(this)
+}
+
+ActivityHookHelper.onDestroy {
+    barBroadReceiver.unRegister(this)
+}
+```
+
+## LICENSE
+```
+MIT License
+
+Copyright (c) 2020 zhiping
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
