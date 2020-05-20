@@ -4,7 +4,7 @@ import android.content.ContentResolver
 import android.net.Uri
 import android.os.Bundle
 
-class KXSharedPreferences(
+open class KXSharedPreferences(
     private val contentResolver: ContentResolver, private val prefName: String
 ) {
     private val uri =

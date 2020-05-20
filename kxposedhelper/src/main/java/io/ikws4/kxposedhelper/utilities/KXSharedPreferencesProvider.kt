@@ -8,7 +8,7 @@ import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
 
-class KXSharedPreferencesProvider : ContentProvider() {
+open class KXSharedPreferencesProvider : ContentProvider() {
 
     private var sharedPreferences: SharedPreferences? = null
 

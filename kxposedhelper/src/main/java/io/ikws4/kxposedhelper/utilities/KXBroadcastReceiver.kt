@@ -5,9 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 
-abstract class KXBroadcastReceiver : BroadcastReceiver() {
-
-    abstract val intentFilter: IntentFilter
+open class KXBroadcastReceiver(private val intentFilter: IntentFilter) : BroadcastReceiver() {
 
     private var listener: OnReceiveListener? = null
 
