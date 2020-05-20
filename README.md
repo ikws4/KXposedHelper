@@ -18,7 +18,7 @@ allprojects {
 Step 2. Add the dependency
 ```gradle
 dependencies {
-    implementation 'com.github.ikws4:KXposedHelper:1.1'
+    implementation 'com.github.ikws4:KXposedHelper:1.2'
 }
 ```
 
